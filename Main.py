@@ -17,40 +17,40 @@ def main():
     gen_1 = rand_book(1)
     list_ = [next(gen_1) for _ in range(100)]
     print(list_)
-
     with open(output_f, "w", encoding="utf-8") as f:
         json.dump(list_, f, ensure_ascii=False, indent=4)
 
 
-def rand_title():
-    """ Функция случайного заголовка"""
+def rand_title() -> str:
 
-    with open(Books_title, 'r',encoding='utf8') as file:
+    """ Функция выбора случайного заголовка"""
+
+    with open(Books_title, 'r', encoding='utf8') as file:
         data = file.readlines()
         result = random.choice(data).strip()
         print(result)
-
     return result
 
 
+def rand_year() -> int:
 
-def rand_year():
     """ Функция выбора случайного года"""
 
-    result = random.randint(1800,2021)
+    result = random.randint(1800, 2021)
     print(result)
-
     return result
 
 
-def rand_pages():
+def rand_pages() -> int:
+
     """ Функция выбора случайных страниц"""
-    result = random.randint(1,100)
 
+    result = random.randint(1, 100)
     return result
 
 
-def rand_isbn13():
+def rand_isbn13() -> str:
+
     """ Функция isbn13"""
 
     fake = Faker()
@@ -59,33 +59,53 @@ def rand_isbn13():
     return result
 
 
-def rand_rating():
-    """ Функция рейтинга"""
-    result = random.randint(1,5)
+def rand_rating() -> int:
+
+    """ Функция случайного рейтинга"""
+
+    result = random.randint(1, 5)
     return result
 
-def rand_price():
-    """ Функция цены"""
+
+def rand_price() -> int:
+
+    """ Функция формирования цены"""
+
     result = random.randint(500, 2000)
     return result
 
+
+def rand_author() -> list:
+
+    """ Функция выбора случайного автора"""
+
+    n = random.randint(1, 3)
+    result = []
+    fake = Faker()
+    for _ in range(n):
+        result.append(fake.name())
+    return result
+
+
 def rand_book(pk: int = 1) -> dict:
-    """ Функция генератора"""
-    #cnt = 100
+    """ Функция генератора книг"""
+
     model = conf.MODEL
     while True:
         book_1 = {
             "model": model,
             "pk": pk,
-            "fields": {
-                "title": rand_title(),
-                "year": rand_year(),
-                "pages": rand_pages(),
-                "isbn13": rand_isbn13(),
-                "rating": rand_rating(),
-                "price" : rand_price(),
+            "fields":
+                {
+                    "title": rand_title(),
+                    "year": rand_year(),
+                    "pages": rand_pages(),
+                    "isbn13": rand_isbn13(),
+                    "rating": rand_rating(),
+                    "price": rand_price(),
+                    "author": rand_author()
+                }
             }
-        }
         yield book_1
         pk += 1
 
