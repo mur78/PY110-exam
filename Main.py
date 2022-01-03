@@ -5,27 +5,25 @@ from faker import Faker
 
 import conf
 
-Books_title = "books.txt"
-Model_conf = "conf.py"
-output_f = "output.txt"
+BOOKS_TITLE = "books.txt"
+MODEL_CONF = "conf.py"
+OUTPUT_F = "output.txt"
 
 
 def main():
-
     """Главная функция"""
 
     gen_1 = rand_book(1)
     list_ = [next(gen_1) for _ in range(100)]
     print(list_)
-    with open(output_f, "w", encoding="utf-8") as f:
+    with open(OUTPUT_F, "w", encoding="utf-8") as f:
         json.dump(list_, f, ensure_ascii=False, indent=4)
 
 
 def rand_title() -> str:
-
     """ Функция выбора случайного заголовка"""
 
-    with open(Books_title, 'r', encoding='utf8') as file:
+    with open(BOOKS_TITLE, 'r', encoding='utf8') as file:
         data = file.readlines()
         result = random.choice(data).strip()
         print(result)
@@ -33,7 +31,6 @@ def rand_title() -> str:
 
 
 def rand_year() -> int:
-
     """ Функция выбора случайного года"""
 
     result = random.randint(1800, 2021)
@@ -42,7 +39,6 @@ def rand_year() -> int:
 
 
 def rand_pages() -> int:
-
     """ Функция выбора случайных страниц"""
 
     result = random.randint(1, 100)
@@ -50,7 +46,6 @@ def rand_pages() -> int:
 
 
 def rand_isbn13() -> str:
-
     """ Функция isbn13"""
 
     fake = Faker()
@@ -60,7 +55,6 @@ def rand_isbn13() -> str:
 
 
 def rand_rating() -> int:
-
     """ Функция случайного рейтинга"""
 
     result = random.randint(1, 5)
@@ -68,7 +62,6 @@ def rand_rating() -> int:
 
 
 def rand_price() -> int:
-
     """ Функция формирования цены"""
 
     result = random.randint(500, 2000)
@@ -76,15 +69,11 @@ def rand_price() -> int:
 
 
 def rand_author() -> list:
-
     """ Функция выбора случайного автора"""
 
     n = random.randint(1, 3)
-    result = []
     fake = Faker()
-    for _ in range(n):
-        result.append(fake.name())
-    return result
+    return [fake.name() for _ in range(n)]
 
 
 def rand_book(pk: int = 1) -> dict:
