@@ -62,7 +62,7 @@ def rand_rating() -> int:
 
 
 def rand_price() -> int:
-    """ Функция формирования цены"""
+    """ Функция формирования случайной цены"""
 
     result = random.randint(500, 2000)
     return result
